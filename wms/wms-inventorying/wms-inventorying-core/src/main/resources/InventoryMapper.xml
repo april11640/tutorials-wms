@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tu.wms.inventorying.dao.api.InventoryDao">
+
+    <insert id="saveInventory">
+        INSERT INTO `inventory`
+        (
+        `coord_x`,
+        `coord_y`,
+        `coord_z`,
+        `goods_id`,
+        `count`,
+        `allocation_count`,
+        `last_modification_time`
+        )
+        VALUES
+        (
+        #{inventoryId.coordX},
+        #{inventoryId.coordY},
+        #{inventoryId.coordZ},
+        #{inventoryId.goodsId},
+        #{count},
+        #{allocationCount},
+        #{lastModificationTime}
+        )
+    </insert>
+
+    <update id="updateInventory">
+        UPDATE `inventory`
+        SET
+        `count` = #{param2.count},
+        `allocation_count` = #{param2.allocationCount},
+        `last_modification_time` = #{param2.lastModificationTime}
+        WHERE
+         coord_x = #{param1.inventoryId.coordX}
+        AND coord_y = #{param1.inventoryId.coordY}
+        AND coord_z = #{param1.inventoryId.coordZ}
+        AND goods_id = #{param1.inventoryId.goodsId}
+        AND `count` = #{param1.count}
+        AND `allocation_count` = #{param1.allocationCount}
+    </update>
+
+    <resultMap id="InventoryResultMap" type="tu.wms.inventorying.domain.po.InventoryPO">
+        <id property="inventoryId.coordX" column="coord_x"/>
+        <id property="inventoryId.coordY" column="coord_y"/>
+        <id property="inventoryId.coordZ" column="coord_z"/>
+        <id property="inventoryId.goodsId" column="goods_id"/>
+        <result property="count" column="count"/>
+        <result property="allocationCount" column="allocation_count"/>
+        <result property="lastModificationTime" column="last_modification_time"/>
+    </resultMap>
+
+    <sql id="columnsIdAndCount">coord_x, coord_y, coord_z, goods_id, `count`, allocation_count</sql>
+
+    <select id="getInventory" resultMap="InventoryResultMap">
+        SELECT
+        <include refid="columnsIdAndCount"/>
+        FROM inventory
+        WHERE
+        coord_x = #{inventoryId.coordX}
+        AND coord_y = #{inventoryId.coordY}
+        AND coord_z = #{inventoryId.coordZ}
+        AND goods_id = #{inventoryId.goodsId}
+    </select>
+
+    <select id="getInventoryWithLock" resultMap="InventoryResultMap">
+        SELECT
+        <include refid="columnsIdAndCount"/>
+        FROM inventory
+        WHERE
+        coord_x = #{inventoryId.coordX}
+        AND coord_y = #{inventoryId.coordY}
+        AND coord_z = #{inventoryId.coordZ}
+        AND goods_id = #{inventoryId.goodsId}
+        FOR UPDATE
+    </select>
+
+</mapper>
