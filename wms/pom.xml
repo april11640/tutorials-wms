@@ -11,6 +11,7 @@
     <modules>
         <module>wms-inventorying</module>
         <module>wms-framework</module>
+        <module>wms-eureka</module>
     </modules>
 
     <properties>

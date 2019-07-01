@@ -2,6 +2,8 @@ Server:
   port: 51001
 
 spring:
+  application:
+    name: tu-wms-inventory
   datasource:
     url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
     username: root
@@ -26,5 +28,39 @@ spring:
 mybatis:
   mapperLocations: classpath*:*Mapper.xml
   config-location: classpath:mybatis.xml
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  wms-inventory-service:
+    name: ${spring.application.name}
+
+eureka:
+  instance:
+    perfer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+    hostname: ${spring.cloud.client.ip-address}
+  client:
+    registry-fetch-interval-seconds: 5
+    serviceUrl:
+      defaultZone: http://admin:123456@localhost:10001/eureka/
+  server:
+    enable-self-preservation: false
+
+
+management:
+  endpoint:
+    restart:
+      enabled: true
+    pause:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 

@@ -22,7 +22,7 @@ public class InventoryConverter {
     }
 
     public final static List<Inventory> fromPO(Collection<InventoryPO> source) {
-        return BeanUtilsEx.copyProperties(source, Inventory::new);
+        return BeanUtilsEx.copyProperties(source, Inventory::new, false);
     }
 
 }

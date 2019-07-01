@@ -1,0 +1,31 @@
+server:
+  port: 10001
+
+spring:
+  application:
+    name: tu-wms-eureka
+  security:
+    user:
+      name: admin
+      password: 123456
+
+eureka:
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 30000
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    hostname: localhost
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+

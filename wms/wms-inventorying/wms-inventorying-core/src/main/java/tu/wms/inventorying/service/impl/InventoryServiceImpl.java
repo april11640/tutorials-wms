@@ -40,7 +40,7 @@ public class InventoryServiceImpl implements InventoryService {
                 throw new InventoryException("库存" + inventoryId + "不存在，不能受理除了增加库存之外的其它库存操作。");
             }
             Inventory inventory = createInventory(inventoryChangeRequest);
-            inventory.change(inventoryChangeRequest.getOperationType(), inventoryChangeRequest.getCount());
+            inventory.change(operationType, inventoryChangeRequest.getCount());
             affectedRows = inventoryManager.saveInventory(inventory,
                     createInventoryLog(inventoryChangeRequest, inventory));
             if (affectedRows > 0) {
@@ -194,7 +194,6 @@ public class InventoryServiceImpl implements InventoryService {
 
     private Inventory createInventory(InventoryChangeRequest inventoryChangeRequest) {
         Inventory inventory = new Inventory(inventoryChangeRequest.getInventoryId());
-
         inventory.setLastModificationTime(LocalDateTime.now());
         return inventory;
     }
