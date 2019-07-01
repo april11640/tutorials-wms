@@ -34,4 +34,35 @@
         )
     </insert>
 
+    <insert id="saveAllInventoryLog">
+        INSERT INTO `inventory_log`
+        (
+        `operation_type`,
+        `operation_id`,
+        `biz_id`,
+        `coord_x`,
+        `coord_y`,
+        `coord_z`,
+        `goods_id`,
+        `count`,
+        `allocation_count`,
+        `change_count`,
+        `creation_time`
+        )
+        VALUES
+        <foreach collection="collection" item="item" open="(" close=")" separator="),(">
+        #{item.operationType},
+        #{item.operationId},
+        #{item.bizId},
+        #{item.inventoryId.coordX},
+        #{item.inventoryId.coordY},
+        #{item.inventoryId.coordZ},
+        #{item.inventoryId.goodsId},
+        #{item.count},
+        #{item.allocationCount},
+        #{item.changeCount},
+        #{item.creationTime}
+        </foreach>
+    </insert>
+
 </mapper>

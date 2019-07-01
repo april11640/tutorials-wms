@@ -10,7 +10,7 @@
 
     </appenders>
     <loggers>
-        <AsyncLogger name="tu.wms.inventorying.service" level="DEBUG" additivity="false">
+        <AsyncLogger name="tu.wms.inventorying" level="DEBUG" additivity="false">
             <appender-ref ref="Console"/>
         </AsyncLogger>
         <AsyncRoot level="INFO">

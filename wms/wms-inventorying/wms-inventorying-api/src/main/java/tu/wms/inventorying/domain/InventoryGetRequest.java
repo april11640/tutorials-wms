@@ -1,8 +1,11 @@
 package tu.wms.inventorying.domain;
 
-public class InventoryGetRequest {
+import tu.wms.framework.model.LockableQuery;
+
+public class InventoryGetRequest extends LockableQuery implements Cloneable {
 
     private InventoryId inventoryId;
+
 
     public InventoryGetRequest() {
 
@@ -14,6 +17,14 @@ public class InventoryGetRequest {
 
     public InventoryGetRequest(InventoryId inventoryId) {
         this.inventoryId = inventoryId;
+    }
+
+    @Override
+    public InventoryGetRequest clone() {
+        InventoryGetRequest target = new InventoryGetRequest();
+        target.setInventoryId(inventoryId);
+        target.setEnableLock(enableLock);
+        return target;
     }
 
     public InventoryId getInventoryId() {

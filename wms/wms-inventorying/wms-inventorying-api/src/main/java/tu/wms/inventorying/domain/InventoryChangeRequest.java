@@ -1,5 +1,7 @@
 package tu.wms.inventorying.domain;
 
+import java.util.Objects;
+
 public class InventoryChangeRequest {
 
     private Long operationId;
@@ -7,6 +9,37 @@ public class InventoryChangeRequest {
     private InventoryOperationTypeEnum operationType;
     private InventoryId inventoryId;
     private Integer count;
+
+    public void addCount(Integer value) {
+        if(value == null) {
+            return ;
+        }
+        if(count == null) {
+            count = value;
+        } else {
+            count += value;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
+        InventoryChangeRequest request = (InventoryChangeRequest) o;
+        return Objects.equals(operationId, request.operationId) &&
+                Objects.equals(bizId, request.bizId) &&
+                operationType == request.operationType &&
+                Objects.equals(inventoryId, request.inventoryId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(operationId, bizId, operationType, inventoryId);
+    }
 
     public Long getOperationId() {
         return operationId;

@@ -15,7 +15,6 @@ public class Inventory implements Serializable, Cloneable {
     private Integer count;
     private Integer allocationCount;
     private LocalDateTime lastModificationTime;
-    private InventoryLog inventoryLog;
 
     public Inventory() {
         initCount();
@@ -40,6 +39,13 @@ public class Inventory implements Serializable, Cloneable {
         target.setAllocationCount(allocationCount);
         target.setLastModificationTime(lastModificationTime);
         return target;
+    }
+
+    public int getAvailableCount() {
+        if(count != null && allocationCount != null) {
+            return count - allocationCount;
+        }
+        return 0;
     }
 
     public void setCountZeroIfNull() {
@@ -158,14 +164,6 @@ public class Inventory implements Serializable, Cloneable {
 
     public LocalDateTime getLastModificationTime() {
         return this.lastModificationTime;
-    }
-
-    public InventoryLog getInventoryLog() {
-        return inventoryLog;
-    }
-
-    public void setInventoryLog(InventoryLog inventoryLog) {
-        this.inventoryLog = inventoryLog;
     }
 
     @Override

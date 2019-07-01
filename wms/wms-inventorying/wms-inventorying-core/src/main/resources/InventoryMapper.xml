@@ -26,6 +26,29 @@
         )
     </insert>
 
+    <insert id="saveAllInventory">
+        INSERT INTO `inventory`
+        (
+        `coord_x`,
+        `coord_y`,
+        `coord_z`,
+        `goods_id`,
+        `count`,
+        `allocation_count`,
+        `last_modification_time`
+        )
+        VALUES
+        <foreach collection="collection" item="item" open="(" close=")" separator="),(">
+        #{item.inventoryId.coordX},
+        #{item.inventoryId.coordY},
+        #{item.inventoryId.coordZ},
+        #{item.inventoryId.goodsId},
+        #{item.count},
+        #{item.allocationCount},
+        #{item.lastModificationTime}
+        </foreach>
+    </insert>
+
     <update id="updateInventory">
         UPDATE `inventory`
         SET
@@ -39,6 +62,23 @@
         AND goods_id = #{param1.inventoryId.goodsId}
         AND `count` = #{param1.count}
         AND `allocation_count` = #{param1.allocationCount}
+    </update>
+
+    <update id="updateAllInventory">
+        <foreach collection="collection" item="item" open="" close="" separator=";">
+        UPDATE `inventory`
+        SET
+        `count` = #{item.item2.count},
+        `allocation_count` = #{item.item2.allocationCount},
+        `last_modification_time` = #{item.item2.lastModificationTime}
+        WHERE
+         coord_x = #{item.item1.inventoryId.coordX}
+        AND coord_y = #{item.item1.inventoryId.coordY}
+        AND coord_z = #{item.item1.inventoryId.coordZ}
+        AND goods_id = #{item.item1.inventoryId.goodsId}
+        AND `count` = #{item.item1.count}
+        AND `allocation_count` = #{item.item1.allocationCount}
+        </foreach>
     </update>
 
     <resultMap id="InventoryResultMap" type="tu.wms.inventorying.domain.po.InventoryPO">
@@ -62,18 +102,25 @@
         AND coord_y = #{inventoryId.coordY}
         AND coord_z = #{inventoryId.coordZ}
         AND goods_id = #{inventoryId.goodsId}
+        <if test="enableLock">
+            FOR UPDATE
+        </if>
     </select>
 
-    <select id="getInventoryWithLock" resultMap="InventoryResultMap">
+    <select id="listInventory" resultMap="InventoryResultMap">
+        <foreach collection="inventoryIdList" item="item" open="" close="" separator="union all">
         SELECT
         <include refid="columnsIdAndCount"/>
         FROM inventory
         WHERE
-        coord_x = #{inventoryId.coordX}
-        AND coord_y = #{inventoryId.coordY}
-        AND coord_z = #{inventoryId.coordZ}
-        AND goods_id = #{inventoryId.goodsId}
-        FOR UPDATE
+        coord_x = #{item.coordX}
+        AND coord_y = #{item.coordY}
+        AND coord_z = #{item.coordZ}
+        AND goods_id = #{item.goodsId}
+        </foreach>
+        <if test="enableLock">
+            FOR UPDATE
+        </if>
     </select>
 
 </mapper>

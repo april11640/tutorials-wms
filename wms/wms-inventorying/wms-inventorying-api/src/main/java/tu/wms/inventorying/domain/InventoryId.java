@@ -2,11 +2,26 @@ package tu.wms.inventorying.domain;
 
 import java.util.Objects;
 
+/**
+ *
+ */
 public class InventoryId {
 
+    /**
+     *
+     */
     private Long coordX;
+    /**
+     *
+     */
     private Long coordY;
+    /**
+     *
+     */
     private Long coordZ;
+    /**
+     *
+     */
     private Long goodsId;
 
     public InventoryId() {
