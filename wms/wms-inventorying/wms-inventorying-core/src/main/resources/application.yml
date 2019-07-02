@@ -5,11 +5,15 @@ spring:
   application:
     name: tu-wms-inventorying
   datasource:
-    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: 123456
+#    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
+#    username: root
+#    password: 123456
+    url: jdbc:mysql://172.16.200.42:3306/testdb?characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
+    username: dev_w
+    password: devw@234
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     filters: stat
     maxActive: 20
     initialSize: 1
