@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
 public class DataSourceConfiguration {
@@ -49,6 +50,14 @@ public class DataSourceConfiguration {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    @Bean
+    public DataSourceTransactionManager transactionManager(DruidDataSource druidDataSource) {
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+        transactionManager.setDataSource(druidDataSource);
+
+        return transactionManager;
     }
 
 }

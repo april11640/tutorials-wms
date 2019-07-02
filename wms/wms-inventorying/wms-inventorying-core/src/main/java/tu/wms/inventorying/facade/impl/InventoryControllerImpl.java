@@ -32,8 +32,7 @@ public class InventoryControllerImpl implements InventoryClient {
     @Override
     public Result<?> updateAllInvertory(@RequestBody Collection<InventoryChangeRequest> collection) {
         inventoryService.updateInventory(collection);
-        throw new RuntimeException("test a ex");
-        //return Result.ok();
+        return Result.ok();
     }
 
     @Override

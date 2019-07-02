@@ -43,8 +43,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         purchaseManager.savePurchaseOrder(purchaseOrder);
     }
 
-    @GlobalTransactional
-//    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional(rollbackFor = Exception.class)
     @Override
     public void shelvePurchaseOrder(ShelvePurchaseOrderRequest shelvePurchaseOrderRequest) {
         PurchaseOrder purchaseOrder = purchaseManager.getPurchaseOrder(shelvePurchaseOrderRequest.getPurchaseOrderId());

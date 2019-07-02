@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import tu.wms.framework.model.tuples.Pair;
@@ -26,7 +25,6 @@ public class InventoryServiceImpl implements InventoryService {
     @Autowired
     private InventoryManager inventoryManager;
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateInventory(InventoryChangeRequest inventoryChangeRequest) {
         InventoryId inventoryId = inventoryChangeRequest.getInventoryId();
@@ -83,7 +81,6 @@ public class InventoryServiceImpl implements InventoryService {
                 createInventoryLog(inventoryChangeRequest, inventoryAfterChange));
     }
 
-//    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateInventory(Collection<InventoryChangeRequest> collection) {
         if (StringUtils.isEmpty(collection)) {

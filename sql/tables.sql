@@ -9,10 +9,11 @@ CREATE TABLE `undo_log` (
   `ext` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `inventory` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `coord_x` bigint(20) unsigned NOT NULL,
   `coord_y` bigint(20) unsigned NOT NULL,
   `coord_z` bigint(20) unsigned NOT NULL,
@@ -20,7 +21,8 @@ CREATE TABLE `inventory` (
   `count` int(11) NOT NULL,
   `allocation_count` int(11) NOT NULL,
   `last_modification_time` timestamp(6) NOT NULL,
-  PRIMARY KEY (`coord_x`,`coord_y`,`coord_z`,`goods_id`)
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `uk_inventory` (`coord_x`,`coord_y`,`coord_z`,`goods_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -38,14 +40,14 @@ CREATE TABLE `inventory_log` (
   `change_count` int(11) NOT NULL,
   `creation_time` timestamp(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2854 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `purchase_order` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `creation_time` timestamp(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `purchase_order_goods` (
@@ -54,7 +56,7 @@ CREATE TABLE `purchase_order_goods` (
   `goods_id` bigint(20) unsigned NOT NULL,
   `count` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `purchase_order_allocation` (
