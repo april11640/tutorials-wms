@@ -47,7 +47,7 @@ eureka:
   client:
     registry-fetch-interval-seconds: 5
     serviceUrl:
-      defaultZone: http://admin:123456@localhost:10001/eureka/
+      defaultZone: http://admin:a0222943@localhost:10001/eureka/
   server:
     enable-self-preservation: false
 
