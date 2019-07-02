@@ -83,7 +83,7 @@ public class InventoryServiceImpl implements InventoryService {
                 createInventoryLog(inventoryChangeRequest, inventoryAfterChange));
     }
 
-    @Transactional(rollbackFor = Exception.class)
+//    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateInventory(Collection<InventoryChangeRequest> collection) {
         if (StringUtils.isEmpty(collection)) {

@@ -25,6 +25,7 @@
         <commons-pool2.version>2.6.0</commons-pool2.version>
         <disruptor.version>3.4.2</disruptor.version>
         <aspectjweaver.version>1.9.1</aspectjweaver.version>
+        <seata.version>0.6.1</seata.version>
     </properties>
 
     <dependencies>
@@ -80,6 +81,22 @@
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectjweaver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-all</artifactId>
+                <version>${seata.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-seata</artifactId>
+                <version>0.9.1.BUILD-SNAPSHOT</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.seata</groupId>
+                        <artifactId>seata-spring</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,5 +1,6 @@
 package tu.wms.purchasing.service.impl;
 
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,8 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Autowired
     private InventoryClient inventoryClient;
 
-    @Transactional(rollbackFor = Exception.class)
+    //@Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
     @Override
     public void savePurchaseOrder(SavePurchaseOrderRequest savePurchaseOrderRequest) {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
@@ -42,7 +44,8 @@ public class PurchaseServiceImpl implements PurchaseService {
         purchaseManager.savePurchaseOrder(purchaseOrder);
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
+//    @Transactional(rollbackFor = Exception.class)
     @Override
     public void shelvePurchaseOrder(ShelvePurchaseOrderRequest shelvePurchaseOrderRequest) {
         PurchaseOrder purchaseOrder = purchaseManager.getPurchaseOrder(shelvePurchaseOrderRequest.getPurchaseOrderId());

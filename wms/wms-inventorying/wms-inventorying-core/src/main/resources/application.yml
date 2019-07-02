@@ -24,6 +24,10 @@ spring:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
     connection-init-sqls: SET NAMES utf8mb4
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: my_test_tx_group
 
 mybatis:
   mapperLocations: classpath*:*Mapper.xml
