@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tu.wms.purchasing.dao.api.PurchaseOrderGoodsDao">
+
+    <insert id="saveAllPurchaseOrderGoods">
+        INSERT INTO `purchase_order_goods`
+        (
+        `order_id`,
+        `goods_id`,
+        `count`
+        )
+        VALUES
+        <foreach collection="collection" item="item" open="(" close=")" separator="),(">
+            #{item.orderId},
+            #{item.goodsId},
+            #{item.count}
+        </foreach>
+    </insert>
+
+    <resultMap id="PurchaseOrderGoodsResultMap" type="tu.wms.purchasing.domain.po.PurchaseOrderGoodsPO">
+        <id property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="count" column="count"/>
+    </resultMap>
+
+    <sql id="columns">id, order_id, goods_id, `count`</sql>
+
+    <select id="listPurchaseOrderGoodsByOrderId" resultMap="PurchaseOrderGoodsResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM purchase_order_goods
+        WHERE
+        order_id = #{param1}
+    </select>
+
+</mapper>

@@ -1,9 +1,9 @@
 Server:
-  port: 51001
+  port: 51002
 
 spring:
   application:
-    name: tu-wms-inventorying
+    name: tu-wms-purchasing
   datasource:
     url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
     username: root
@@ -35,8 +35,10 @@ feign:
       default:
         connectTimeout: 5000
         readTimeout: 5000
-  wms-inventorying-service:
+  wms-purchasing-service:
     name: ${spring.application.name}
+  wms-inventorying-service:
+    name: tu-wms-inventorying
 
 eureka:
   instance:

@@ -5,7 +5,9 @@ package tu.wms.framework.model.tuples;
  */
 public class Single<T1> {
 
-    protected final T1 item1;
+    protected T1 item1;
+
+    public Single() {}
 
     public Single(T1 item1) {
         this.item1 = item1;
@@ -15,4 +17,7 @@ public class Single<T1> {
         return item1;
     }
 
+    public void setItem1(T1 item1) {
+        this.item1 = item1;
+    }
 }

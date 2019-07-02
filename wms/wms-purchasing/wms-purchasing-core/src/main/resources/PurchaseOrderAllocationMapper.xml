@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tu.wms.purchasing.dao.api.PurchaseOrderAllocationDao">
+
+    <insert id="saveAllPurchaseOrderAllocation">
+        INSERT INTO `purchase_order_allocation`
+        (
+        `order_id`,
+        `coord_x`,
+        `coord_y`,
+        `coord_z`,
+        `goods_id`,
+        `count`
+        )
+        VALUES
+        <foreach collection="collection" item="item" open="(" close=")" separator="),(">
+            #{item.orderId},
+            #{item.coordX},
+            #{item.coordY},
+            #{item.coordZ},
+            #{item.goodsId},
+            #{item.count}
+        </foreach>
+    </insert>
+
+</mapper>
