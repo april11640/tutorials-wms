@@ -27,8 +27,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Autowired
     private InventoryClient inventoryClient;
 
-    //@Transactional(rollbackFor = Exception.class)
-    @GlobalTransactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void savePurchaseOrder(SavePurchaseOrderRequest savePurchaseOrderRequest) {
         PurchaseOrder purchaseOrder = new PurchaseOrder();

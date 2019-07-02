@@ -2,59 +2,20 @@ package tu.wms.purchasing.configuration;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import io.seata.rm.datasource.DataSourceProxy;
-import io.seata.spring.annotation.GlobalTransactionScanner;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-
-import java.util.List;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
 public class DataSourceConfiguration {
-
-    @Value("${spring.datasource.driver-class-name}")
-    private String driverClassName;
-
-    @Value("${spring.datasource.url}")
-    private String url;
-
-    @Value("${spring.datasource.username}")
-    private String username;
-
-    @Value("${spring.datasource.password}")
-    private String password;
-
-    @Value("${spring.datasource.connection-init-sqls}")
-    private List<String> connectionInitSqls;
-
-    @Value("${spring.datasource.initialSize}")
-    private int initialSize;
-
-    @Value("${spring.datasource.minIdle}")
-    private int minIdle;
-
-    @Value("${spring.datasource.maxActive}")
-    private int maxActive;
-
-    @Value("${spring.datasource.maxWait}")
-    private int maxWait;
-
-    @Value("${spring.datasource.timeBetweenEvictionRunsMillis}")
-    private int timeBetweenEvictionRunsMillis;
-
-    @Value("${spring.datasource.minEvictableIdleTimeMillis}")
-    private int minEvictableIdleTimeMillis;
-
-    @Value("${spring.datasource.validationQuery}")
-    private String validationQuery;
-
-    @Value("${spring.datasource.testOnBorrow}")
-    private boolean testOnBorrow;
 
     @Value("${mybatis.mapperLocations}")
     private String mapperLocations;
@@ -62,33 +23,14 @@ public class DataSourceConfiguration {
     @Value("${mybatis.config-location}")
     private String configLocation;
 
-    @Bean(initMethod="init", destroyMethod="close")
-    @Primary
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DruidDataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
-
-        datasource.setDriverClassName(driverClassName);
-        datasource.setUrl(url);
-        datasource.setUsername(username);
-        datasource.setPassword(password);
-
-        datasource.setInitialSize(initialSize);
-        datasource.setMinIdle(minIdle);
-        datasource.setMaxActive(maxActive);
-        datasource.setMaxWait(maxWait);
-
-        datasource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
-        datasource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
-
-
-        datasource.setTestOnBorrow(testOnBorrow);
-        datasource.setValidationQuery(validationQuery);
-
-        datasource.setConnectionInitSqls(connectionInitSqls);
-
         return datasource;
     }
 
+    @Primary
     @Bean
     public DataSourceProxy dataSourceProxy(DruidDataSource druidDataSource){
         return new DataSourceProxy(druidDataSource);
@@ -98,7 +40,7 @@ public class DataSourceConfiguration {
     public SqlSessionFactory sqlSessionFactory(DataSourceProxy dataSourceProxy) {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSourceProxy);
-
+        bean.setTransactionFactory(new JdbcTransactionFactory());
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
             bean.setConfigLocation(resolver.getResource(configLocation));
@@ -110,9 +52,12 @@ public class DataSourceConfiguration {
         }
     }
 
-//    @Bean
-//    public GlobalTransactionScanner globalTransactionScanner(){
-//        return new GlobalTransactionScanner("purchasing-seata-example", "my_test_tx_group");
-//    }
+    @Bean
+    public DataSourceTransactionManager transactionManager(DruidDataSource druidDataSource) {
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+        transactionManager.setDataSource(druidDataSource);
+
+        return transactionManager;
+    }
 
 }
