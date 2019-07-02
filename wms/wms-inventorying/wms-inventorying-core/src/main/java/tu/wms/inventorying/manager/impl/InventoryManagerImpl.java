@@ -33,6 +33,7 @@ public class InventoryManagerImpl implements InventoryManager {
     @Override
     public int saveInventory(Inventory inventory, InventoryLog inventoryLog) {
         int affectedRows = inventoryDao.saveInventory(InventoryConverter.toPO(inventory));
+        System.out.println("save affectedRows=" + affectedRows);
         if(affectedRows > 0) {
             inventoryLogDao.saveInventoryLog(InventoryLogConverter.toPO(inventoryLog));
         }
@@ -54,8 +55,9 @@ public class InventoryManagerImpl implements InventoryManager {
     public int updateInventory(Inventory before, Inventory after, InventoryLog inventoryLog) {
         int affectedRows =  inventoryDao.updateInventory(InventoryConverter.toPO(before),
                 InventoryConverter.toPO(after));
+        System.out.println("update affectedRows=" + affectedRows);
         if(affectedRows > 0) {
-            inventoryLogDao.saveInventoryLog(InventoryLogConverter.toPO(inventoryLog));
+            System.out.println("2 update affectedRows=" + inventoryLogDao.saveInventoryLog(InventoryLogConverter.toPO(inventoryLog)));
         }
         return affectedRows;
     }
