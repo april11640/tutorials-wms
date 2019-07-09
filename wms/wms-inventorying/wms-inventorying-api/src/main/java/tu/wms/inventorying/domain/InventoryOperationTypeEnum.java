@@ -2,6 +2,9 @@ package tu.wms.inventorying.domain;
 
 import tu.wms.framework.model.CodeEnum;
 
+/**
+ * 库存操作分类
+ */
 public enum InventoryOperationTypeEnum implements CodeEnum {
 
     /**
@@ -38,6 +41,14 @@ public enum InventoryOperationTypeEnum implements CodeEnum {
     @Override
     public int getCode() {
         return code;
+    }
+
+
+    public static void main(String[] args) {
+        InventoryOperationTypeEnum[] values = InventoryOperationTypeEnum.values();
+        for(InventoryOperationTypeEnum value : values) {
+            System.out.println(value.name() + ", " + value.getCode() + ", " + value.ordinal());
+        }
     }
 
 }
