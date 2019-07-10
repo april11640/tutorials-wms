@@ -18,11 +18,11 @@ public class SecurityConfiguration
 //                .sessionRegistry(sessionRegistry());
         http
                 .authorizeRequests()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .permitAll();
+                    .antMatchers("/").permitAll();
+//                    .anyRequest().authenticated()
+//                    .and()
+//                .formLogin()
+//                    .permitAll();
     }
 
 }
