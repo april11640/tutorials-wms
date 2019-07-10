@@ -1,0 +1,20 @@
+server:
+  port: 51000
+  servlet:
+    session:
+      timeout: 600s # Session timeout. If a duration suffix is not specified, seconds is used.
+
+spring:
+  redis:
+    host: 172.16.200.42
+    port: 6379
+    password: 123456
+  session:
+    store-type: redis # Session store type.
+    redis:
+      flush-mode: ON_SAVE # Sessions flush mode.
+      namespace: tu:spring:session # Namespace for keys used to store sessions.
+  security:
+    user:
+      name: admin
+      password: 123456

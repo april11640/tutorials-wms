@@ -13,6 +13,7 @@
         <module>wms-framework</module>
         <module>wms-inventorying</module>
         <module>wms-purchasing</module>
+        <module>wms-uc</module>
     </modules>
 
     <properties>
@@ -51,6 +52,13 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-bom</artifactId>
+                <version>Bean-SR4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
